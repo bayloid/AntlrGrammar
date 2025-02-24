@@ -16,9 +16,12 @@ public class Main {
         ParseTree tree = parser.program();
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        PrettyPrintListener printer = new PrettyPrintListener(symbolTable);
+        //PrettyPrintListener printer = new PrettyPrintListener(symbolTable);
 
-        walker.walk(printer,tree);
-        symbolTable.print();
+        PrettyPrinterVisitor visitor = new PrettyPrinterVisitor();
+        visitor.visit(tree);
+
+        //walker.walk(printer,tree);
+        //symbolTable.print();
     }
 }
