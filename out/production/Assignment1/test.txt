@@ -1,4 +1,6 @@
+var y;
+y = 3;
 var x;
-x = (3 + 5) * 2;
-var flag;
-flag = !((x < 10) || (x >= 16));
+x = 4 * y;
+var j;
+j = (y * x)/2;
