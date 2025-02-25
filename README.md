@@ -13,4 +13,4 @@ Provide a text file containing your input statements following the format as giv
     var y;
     y = x / 2;
 
-The pat
+The path to the test file should be given once the main method is run and after the prompt in the console. Multiple test files are already provided.
