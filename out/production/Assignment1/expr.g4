@@ -44,7 +44,7 @@ expression
     ;
 
 logicalOrExpression
-    : logicalAndExpression (OR logicalOrExpression)*
+    : logicalAndExpression (OR logicalAndExpression)*
     ;
 
 logicalAndExpression

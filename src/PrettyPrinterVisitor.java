@@ -65,19 +65,17 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
     @Override
     public Integer visitLogicalOrExpression(exprParser.LogicalOrExpressionContext ctx) {
         if(ctx.OR().isEmpty()){
-            return visit(ctx.logicalAndExpression());
+            return visit(ctx.logicalAndExpression(0));
         }
         indent();
         System.out.println("LogicalOrExpression: ");
         indentLevel++;
-        int left = visit(ctx.logicalAndExpression().getChild(0));
-        for (int i = 0; i < ctx.logicalAndExpression().AND().size(); i++) {
-            int right = visit(ctx.logicalAndExpression().getChild(i+1));
+        int left = visit(ctx.logicalAndExpression(0));
+        for (int i = 1; i < ctx.logicalAndExpression().size(); i++) {
+            int right = visit(ctx.logicalAndExpression(i));
             left = (left != 0 || right != 0) ? 1 : 0;
         }
-        if (ctx.logicalOrExpression() != null) {
-            indentLevel--;
-        }
+        indentLevel--;
         return left;
     }
 
@@ -92,6 +90,7 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
             int right = visit(ctx.equalityExpression(i));
             left = (left != 0 && right != 0) ? 1 : 0; // Logical AND
         }
+        indentLevel--;
         return left;
     }
 
@@ -135,6 +134,7 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
                 left = (left >= right) ? 1 : 0; // Greater than or equal
             }
         }
+        indentLevel--;
         return left;
     }
 
@@ -185,7 +185,6 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
         indentLevel--;
         return left;
     }
-
     @Override
     public Integer visitUnaryExpression(exprParser.UnaryExpressionContext ctx) {
         if(ctx.NOT()==null){
@@ -201,13 +200,12 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
             return visit(ctx.primaryExpression());
         }
     }
-
     @Override
     public Integer visitPrimaryExpression(exprParser.PrimaryExpressionContext ctx) {
         if (ctx.INT() != null) {
             indent();
             System.out.println("Number: "+ctx.INT().getText());
-            return Integer.parseInt(ctx.INT().getText()); // Integer literal
+            return Integer.parseInt(ctx.INT().getText());// Integer literal
         } else if (ctx.ID() != null) {
             String varName = ctx.ID().getText();
             if (!symbolTable.containsKey(varName)) {
@@ -215,7 +213,7 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
             }
             indent();
             System.out.println("Identifier: "+ctx.ID().getText());
-            return symbolTable.getOrDefault(varName, 0); // Variable lookup
+            return (int) symbolTable.getOrDefault(varName, 0); // Variable lookup
         } else if (ctx.TRUE() != null) {
             indent();
             System.out.println("Boolean: true");

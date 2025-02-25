@@ -388,18 +388,15 @@ public class exprParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class LogicalOrExpressionContext extends ParserRuleContext {
-		public LogicalAndExpressionContext logicalAndExpression() {
-			return getRuleContext(LogicalAndExpressionContext.class,0);
+		public List<LogicalAndExpressionContext> logicalAndExpression() {
+			return getRuleContexts(LogicalAndExpressionContext.class);
+		}
+		public LogicalAndExpressionContext logicalAndExpression(int i) {
+			return getRuleContext(LogicalAndExpressionContext.class,i);
 		}
 		public List<TerminalNode> OR() { return getTokens(exprParser.OR); }
 		public TerminalNode OR(int i) {
 			return getToken(exprParser.OR, i);
-		}
-		public List<LogicalOrExpressionContext> logicalOrExpression() {
-			return getRuleContexts(LogicalOrExpressionContext.class);
-		}
-		public LogicalOrExpressionContext logicalOrExpression(int i) {
-			return getRuleContext(LogicalOrExpressionContext.class,i);
 		}
 		public LogicalOrExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -423,29 +420,27 @@ public class exprParser extends Parser {
 	public final LogicalOrExpressionContext logicalOrExpression() throws RecognitionException {
 		LogicalOrExpressionContext _localctx = new LogicalOrExpressionContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_logicalOrExpression);
+		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(52);
 			logicalAndExpression();
 			setState(57);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(53);
-					match(OR);
-					setState(54);
-					logicalOrExpression();
-					}
-					} 
+			_la = _input.LA(1);
+			while (_la==OR) {
+				{
+				{
+				setState(53);
+				match(OR);
+				setState(54);
+				logicalAndExpression();
+				}
 				}
 				setState(59);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_la = _input.LA(1);
 			}
 			}
 		}
@@ -1059,7 +1054,7 @@ public class exprParser extends Parser {
 		"\u0001\u0000\u0000\u0000./\u0005\u0015\u0000\u0000/0\u0005\u0004\u0000"+
 		"\u000001\u0003\b\u0004\u00001\u0007\u0001\u0000\u0000\u000023\u0003\n"+
 		"\u0005\u00003\t\u0001\u0000\u0000\u000049\u0003\f\u0006\u000056\u0005"+
-		"\u0013\u0000\u000068\u0003\n\u0005\u000075\u0001\u0000\u0000\u00008;\u0001"+
+		"\u0013\u0000\u000068\u0003\f\u0006\u000075\u0001\u0000\u0000\u00008;\u0001"+
 		"\u0000\u0000\u000097\u0001\u0000\u0000\u00009:\u0001\u0000\u0000\u0000"+
 		":\u000b\u0001\u0000\u0000\u0000;9\u0001\u0000\u0000\u0000<A\u0003\u000e"+
 		"\u0007\u0000=>\u0005\u0012\u0000\u0000>@\u0003\u000e\u0007\u0000?=\u0001"+
