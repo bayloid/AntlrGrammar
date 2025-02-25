@@ -1,6 +1,2 @@
 var y;
-y = 3;
-var x;
-x = 4 * y;
-var j;
-j = (y * x)/2;
+y = 3 + 7;

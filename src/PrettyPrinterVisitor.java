@@ -47,11 +47,13 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
 
     @Override
     public Integer visitAssignment(exprParser.AssignmentContext ctx) {
-        // Evaluate the expression and assign its value to the variable
+        String varName = ctx.ID().getText();
+        if(!(symbolTable.containsKey(varName))){
+            throw new RuntimeException("Variable "+varName+" not declared.");
+        }
         indent();
         System.out.println("Assignment: " + ctx.ID().getText() + " = ");
         indentLevel++;
-        String varName = ctx.ID().getText();
         int value = visit(ctx.expression());
         symbolTable.put(varName, value);
         return value;
@@ -213,7 +215,7 @@ public class PrettyPrinterVisitor extends exprBaseVisitor<Integer>{
             }
             indent();
             System.out.println("Identifier: "+ctx.ID().getText());
-            return (int) symbolTable.getOrDefault(varName, 0); // Variable lookup
+            return symbolTable.getOrDefault(varName, 0); // Variable lookup
         } else if (ctx.TRUE() != null) {
             indent();
             System.out.println("Boolean: true");
